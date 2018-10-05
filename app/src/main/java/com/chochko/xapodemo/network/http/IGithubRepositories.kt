@@ -1,7 +1,7 @@
 package com.chochko.xapodemo.network.http
 
+import com.chochko.xapodemo.data.POJO.github.GithubApiModel
 import com.chochko.xapodemo.network.control.EndPoints
-import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -23,7 +23,7 @@ interface IGithubRepositories {
      * All of the parameters are changable but
      */
     @GET(EndPoints.ENDPOINT_REPOSITORIES)
-    fun getUsers(@QueryMap(encoded = true) searchParams: HashMap<String, String> = hashMapOf("q" to "topic:android"),
+    fun getUsers(@QueryMap(encoded = true) searchParams: HashMap<String, String> = hashMapOf("q" to "topic:android language:java"),
                  @Query("sort") sort: String = "stars",
-                 @Query("order") order: String = "desc"): Call<Any>
+                 @Query("order") order: String = "desc"): Call<GithubApiModel>
 }
