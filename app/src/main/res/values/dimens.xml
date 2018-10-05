@@ -4,6 +4,7 @@
     <!ENTITY spacing_medium "8dp">
     <!ENTITY spacing_big "12dp">
     <!ENTITY spacing_large "16dp">
+    <!ENTITY circle_image_diameter "72dp">
     ]>
 <resources>
 
@@ -17,7 +18,9 @@
     <dimen name="text_large">22sp</dimen>
 
     <dimen name="fragment_detail_circle_image_border_width">2dp</dimen>
-    <dimen name="fragment_detail_circle_image_diameter">72dp</dimen>
+    <dimen name="fragment_detail_circle_image_diameter">&circle_image_diameter;</dimen>
     <dimen name="fragment_detail_collapse_image_height">170dp</dimen>
+
+    <dimen name="fragment_repos_list_circle_image_diameter">&circle_image_diameter;</dimen>
 
 </resources>

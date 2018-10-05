@@ -3,12 +3,7 @@ package com.chochko.xapodemo.views
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.chochko.xapodemo.R
-import com.chochko.xapodemo.network.http.GithubHttpClient
 import com.chochko.xapodemo.views.fragments.details.DetailsFragment
-import com.github.benoitdion.ln.Ln
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
