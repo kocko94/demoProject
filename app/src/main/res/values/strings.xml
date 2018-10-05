@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">XapoDemo</string>
 
+    <string name="fragment_repos_list_download_error_msg">The files were not downloaded… Error: $1%s</string>
+    <string name="fragment_repos_list_download_error_no_reason">No reason provided from the API server!</string>
 
     <string name="fragment_detail_appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
 </resources>

@@ -5,32 +5,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="4dp"
     app:cardElevation="3dp"
-    android:layout_margin="@dimen/margin_info_container"
-    android:padding="@dimen/padding_info_container">
+    android:layout_margin="@dimen/margin_info_container">
 
-    <android.support.constraint.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/margin_info_container">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/repo_list_item_image"
             android:layout_width="@dimen/fragment_repos_list_circle_image_diameter"
             android:layout_height="@dimen/fragment_repos_list_circle_image_diameter"
-            android:src="@drawable/github_octocat"
-            app:layout_constraintBottom_toTopOf="@id/guideline"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1" />
-
-        <android.support.constraint.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5"
-            android:layout_marginBottom="@dimen/margin_info_container"
-            android:layout_marginTop="@dimen/margin_info_container"/>
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/github_octocat" />
 
         <TextView
             android:id="@+id/repo_list_item_short_name"
@@ -38,9 +26,9 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:ellipsize="end"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guideline"/>
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_info_container"
+            android:layout_below="@id/repo_list_item_image"/>
 
         <TextView
             android:id="@+id/repo_list_item_short_description"
@@ -49,9 +37,9 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:layout_marginTop="@dimen/margin_info_container"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/repo_list_item_short_name"/>
-    </android.support.constraint.ConstraintLayout>
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/repo_list_item_short_name"/>
+
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>
