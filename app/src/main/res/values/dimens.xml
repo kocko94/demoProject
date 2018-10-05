@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE resources [
+    <!ENTITY spacing_small "4dp">
+    <!ENTITY spacing_medium "8dp">
+    <!ENTITY spacing_big "12dp">
+    <!ENTITY spacing_large "16dp">
+    ]>
+<resources>
+
+    <dimen name="margin_title_container">&spacing_small;</dimen>
+    <dimen name="margin_info_container">&spacing_medium;</dimen>
+    <dimen name="padding_info_container">&spacing_large;</dimen>
+
+    <dimen name="text_small">10sp</dimen>
+    <dimen name="text_medium">14sp</dimen>
+    <dimen name="text_big">18sp</dimen>
+    <dimen name="text_large">22sp</dimen>
+</resources>
