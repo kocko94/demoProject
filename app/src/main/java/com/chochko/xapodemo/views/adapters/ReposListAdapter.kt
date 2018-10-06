@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.chochko.xapodemo.R
 import com.chochko.xapodemo.data.POJO.github.RepositoryApiModel
+import com.chochko.xapodemo.views.fragments.repolist.ReposListFragment
 import kotlinx.android.synthetic.main.repos_list_item.view.*
 import java.lang.IllegalArgumentException
 
@@ -23,20 +23,20 @@ import java.lang.IllegalArgumentException
  *
  * @author Konstantin Vankov
  */
-class ReposListAdapter(private var mReposData: ArrayList<RepositoryApiModel> = arrayListOf())
+class ReposListAdapter(var reposData: ArrayList<RepositoryApiModel> = arrayListOf())
     : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     //used for notifying the creating fragment for the clicked item
-    var onClickListener: OnItemClickListener? = null
+    var onClickListener: ReposListFragment.OnItemClickListener? = null
 
     //helper for animating the views only once
-    private var mAnimatedPosition = -1
+    var animatedPosition = -1
 
     private enum class ViewType{
         Repo, EndOfList
     }
 
-//    override fun getItemViewType(position: Int): Int = if(mReposData.lastIndex == position) ViewType.EndOfList.ordinal else ViewType.Repo.ordinal
+//    override fun getItemViewType(position: Int): Int = if(reposData.lastIndex == position) ViewType.EndOfList.ordinal else ViewType.Repo.ordinal
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
             when(viewType){
@@ -45,11 +45,11 @@ class ReposListAdapter(private var mReposData: ArrayList<RepositoryApiModel> = a
                 else -> { throw IllegalArgumentException("Unknown view type provided $viewType! Possibles view types are ${ViewType.Repo.ordinal} and ${ViewType.EndOfList.ordinal}...")}
             }
 
-    override fun getItemCount(): Int = mReposData.size
+    override fun getItemCount(): Int = reposData.size
 
     override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
         this.applyAnimation(p0.itemView, p1)
-        (p0 as UpdateViewHolder).bindViews(mReposData[p1])
+        (p0 as UpdateViewHolder).bindViews(reposData[p1])
     }
 
     /**
@@ -57,10 +57,10 @@ class ReposListAdapter(private var mReposData: ArrayList<RepositoryApiModel> = a
      * elements presented within the given [viewToAnimate].
      */
     private fun applyAnimation(viewToAnimate: View, position: Int){
-        if (position > mAnimatedPosition) {
+        if (position > animatedPosition) {
             val animation = AnimationUtils.loadAnimation(viewToAnimate.context, android.R.anim.slide_in_left)
             viewToAnimate.startAnimation(animation)
-            this.mAnimatedPosition = position
+            this.animatedPosition = position
         }
     }
 
@@ -69,10 +69,10 @@ class ReposListAdapter(private var mReposData: ArrayList<RepositoryApiModel> = a
      */
     fun updateListData(newData: ArrayList<RepositoryApiModel>){
         //very efficient way of updating adapter with new values
-        DiffUtil.calculateDiff(ReposDifferenceCallback(this.mReposData, newData)).apply {
+        DiffUtil.calculateDiff(ReposDifferenceCallback(this.reposData, newData)).apply {
             //clear the old data
-            this@ReposListAdapter.mReposData.clear()
-            this@ReposListAdapter.mReposData.addAll(newData)
+            this@ReposListAdapter.reposData.clear()
+            this@ReposListAdapter.reposData.addAll(newData)
 
         }.dispatchUpdatesTo(this@ReposListAdapter)
 
@@ -82,7 +82,7 @@ class ReposListAdapter(private var mReposData: ArrayList<RepositoryApiModel> = a
      * The idea behind this view holder is in case that we can somehow
      * separate the pile of data to be received in smaller packages and only
      * download new 'package' of data when the user has scrolled to the last
-     * item in [mReposData]. Unfortunately, the GitHub's API is not supporting
+     * item in [reposData]. Unfortunately, the GitHub's API is not supporting
      * such separation and the only reasonable way of achieving such separation
      * would be to initially download the data and store it in a DB. Room
      * is a very useful tool from the JatPack arsenal. Using some DB we can
@@ -112,7 +112,7 @@ class ReposListAdapter(private var mReposData: ArrayList<RepositoryApiModel> = a
             repoShortDescription.text = repository.description
 
             this.itemView.setOnClickListener{
-                this@ReposListAdapter.onClickListener?.onItemClick(repository)
+                this@ReposListAdapter.onClickListener?.onItemClick(repository, repoOwnerAvatar)
             }
         }
 
@@ -120,15 +120,5 @@ class ReposListAdapter(private var mReposData: ArrayList<RepositoryApiModel> = a
 
     private interface UpdateViewHolder{
         fun bindViews(repository: RepositoryApiModel)
-    }
-
-    interface OnItemClickListener{
-        /**
-         * Callback for the clicked [RepositoryApiModel] that are assigned
-         * through the constructor of this [ReposListAdapter] class.
-         *
-         * @param clickedRepo the clicked object itself holding all of the data.
-         */
-        fun onItemClick(clickedRepo: RepositoryApiModel)
     }
 }
