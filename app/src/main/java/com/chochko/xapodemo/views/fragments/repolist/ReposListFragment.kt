@@ -1,7 +1,9 @@
 package com.chochko.xapodemo.views.fragments.repolist
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
+import android.support.transition.TransitionInflater
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
@@ -143,7 +145,7 @@ class ReposListFragment : Fragment(),
          * @param sharedElement for APIs >= 21 this would be the shared element between fragments transition
          *
          */
-        fun onItemClick(clickedRepo: RepositoryApiModel, sharedElement: CircleImageView)
+        fun onRepoListItemClicked(clickedRepo: RepositoryApiModel, sharedElement: CircleImageView)
     }
 
 }

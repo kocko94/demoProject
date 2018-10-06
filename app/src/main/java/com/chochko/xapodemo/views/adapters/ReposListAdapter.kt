@@ -112,7 +112,7 @@ class ReposListAdapter(var reposData: ArrayList<RepositoryApiModel> = arrayListO
             repoShortDescription.text = repository.description
 
             this.itemView.setOnClickListener{
-                this@ReposListAdapter.onClickListener?.onItemClick(repository, repoOwnerAvatar)
+                this@ReposListAdapter.onClickListener?.onRepoListItemClicked(repository, repoOwnerAvatar)
             }
         }
 
