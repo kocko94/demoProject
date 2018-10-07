@@ -13,7 +13,6 @@ import com.chochko.xapodemo.R
 import com.chochko.xapodemo.data.POJO.github.GithubApiModel
 import com.chochko.xapodemo.data.POJO.github.RepositoryApiModel
 import com.chochko.xapodemo.views.adapters.ReposListAdapter
-import com.github.benoitdion.ln.Ln
 import kotlinx.android.synthetic.main.fragment_repos_list.*
 
 private const val KEY_SCROLL_POSITION = "scrollPosition"
@@ -34,7 +33,7 @@ class ReposListFragment : Fragment(),
     private var mPresenter: IRepoListPresenter? = null
     private var mItemClickListener: OnItemClickListener? = null
     private var mScrollPosition = -1
-    private var mAdapterItems: ArrayList<RepositoryApiModel>? = null
+    private var mAdapterItems: ArrayList<RepositoryApiModel> = arrayListOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
             = inflater.inflate(R.layout.fragment_repos_list, container, false)
@@ -64,11 +63,11 @@ class ReposListFragment : Fragment(),
 
     private fun restoreStateAfterRotation(savedInstanceState: Bundle){
         //restore state values
-        this.mScrollPosition = savedInstanceState.getInt(KEY_SCROLL_POSITION)
-        this.mAdapterItems = savedInstanceState.getParcelableArrayList(KEY_ADAPTER_ITEMS)
+        this.mScrollPosition = savedInstanceState.getInt(KEY_SCROLL_POSITION, 0)
+        this.mAdapterItems = savedInstanceState.getParcelableArrayList(KEY_ADAPTER_ITEMS) ?: arrayListOf()
 
         //update the adapter right away
-        this.updateAdapterData(this.mAdapterItems!!)
+        this.updateAdapterData(this.mAdapterItems)
 
         //correct the animation value in the class so it wont animate object above the current ones
         (this.recycler_view.adapter as ReposListAdapter).animatedPosition = this.mScrollPosition
@@ -86,20 +85,22 @@ class ReposListFragment : Fragment(),
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.apply {
-            val scrollPosition = (this@ReposListFragment.recycler_view.layoutManager as GridLayoutManager).findFirstCompletelyVisibleItemPosition()
+            val scrollPosition = if(this@ReposListFragment.recycler_view != null)////if the fragment is in the backstack
+                            (this@ReposListFragment.recycler_view.layoutManager as GridLayoutManager).findFirstCompletelyVisibleItemPosition() else 0
             putInt(KEY_SCROLL_POSITION, scrollPosition)
-            val adapterList = (this@ReposListFragment.recycler_view.adapter as ReposListAdapter).reposData
-            putParcelableArrayList(KEY_ADAPTER_ITEMS, adapterList)
+            putParcelableArrayList(KEY_ADAPTER_ITEMS, mAdapterItems)
         }
     }
 
     override fun onResume() {
         super.onResume()
         this.mPresenter = IRepoListPresenterImp(this).also {
-            if(mAdapterItems == null)//only if the device was not rotated
-                it.downloadGithubData()
-            else
-                this@ReposListFragment.updateAdapterData(mAdapterItems!!) //update the adapter right away from the local data
+            when {
+                //only if the device was not rotated or in case it was rotated during download
+                mAdapterItems.isEmpty() -> it.downloadGithubData()
+                //update the adapter right away from the local data
+                else -> this@ReposListFragment.updateAdapterData(mAdapterItems)
+            }
         }
     }
 
@@ -142,7 +143,7 @@ class ReposListFragment : Fragment(),
             //update the adapter
             this.updateAdapterData(ArrayList(downloadedRepos.items))
             //notify the user
-            Toast.makeText(this@ReposListFragment.context, getString(R.string.fragment_repos_list_download_successful_finished), Toast.LENGTH_LONG).show()
+            Toast.makeText(this@ReposListFragment.context, getString(R.string.fragment_repos_list_download_successful_finished), Toast.LENGTH_SHORT).show()
         }
     }
 
