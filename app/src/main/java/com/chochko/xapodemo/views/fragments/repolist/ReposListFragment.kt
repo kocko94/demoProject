@@ -13,6 +13,7 @@ import com.chochko.xapodemo.R
 import com.chochko.xapodemo.data.POJO.github.GithubApiModel
 import com.chochko.xapodemo.data.POJO.github.RepositoryApiModel
 import com.chochko.xapodemo.views.adapters.ReposListAdapter
+import com.github.benoitdion.ln.Ln
 import kotlinx.android.synthetic.main.fragment_repos_list.*
 
 private const val KEY_SCROLL_POSITION = "scrollPosition"
@@ -74,6 +75,7 @@ class ReposListFragment : Fragment(),
 
 
     private fun updateAdapterData(newData: ArrayList<RepositoryApiModel>){
+        this.mAdapterItems = newData
         (this.recycler_view.adapter as ReposListAdapter).updateListData(newData)
     }
 
@@ -92,6 +94,8 @@ class ReposListFragment : Fragment(),
         this.mPresenter = IRepoListPresenterImp(this).also {
             if(mAdapterItems == null)//only if the device was not rotated
                 it.downloadGithubData()
+            else
+                this@ReposListFragment.updateAdapterData(mAdapterItems!!) //update the adapter right away from the local data
         }
     }
 
