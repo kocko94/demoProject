@@ -1,7 +1,9 @@
 package com.chochko.xapodemo.data.POJO.github
 
+import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
+import com.chochko.xapodemo.R
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -21,7 +23,18 @@ data class RepositoryApiModel(@Expose val id: String,
                               @Expose val description: String,
                               @SerializedName("watchers_count") val watchersCount: Int,
                               @Expose val language: String,
-                              @SerializedName("forks_count") val forksCount: Int) : Parcelable {
+                              @SerializedName("forks_count") val forksCount: Int) : Parcelable, IDummyWayForPresenting {
+
+    override fun toDetailFragmentString(context: Context): String =
+            context.getString(R.string.pojo_dummy_string_presentation_repo_model,
+                    id,
+                    name,
+                    language,
+                    owner.toDetailFragmentString(context),
+                    description,
+                    watchersCount,
+                    forksCount)
+
     constructor(parcel: Parcel) : this(
             parcel.readString()!!,
             parcel.readString()!!,

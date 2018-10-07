@@ -1,7 +1,10 @@
 package com.chochko.xapodemo.data.POJO.github
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
+import com.chochko.xapodemo.R
 import com.google.gson.annotations.SerializedName
 
 
@@ -15,11 +18,14 @@ import com.google.gson.annotations.SerializedName
  * @author Konstantin Vankov
  */
 data class OwnerApiModel(@SerializedName("login") val userName: String,
-                         @SerializedName("avatar_url") val userAvatarUrl: String) : Parcelable {
+                         @SerializedName("avatar_url") val userAvatarUrl: String) : Parcelable, IDummyWayForPresenting {
     constructor(source: Parcel) : this(
             source.readString()!!,
             source.readString()!!
     )
+
+    override fun toDetailFragmentString(context: Context): String =
+            context.getString(R.string.pojo_dummy_string_presentation_owner_model, userName)
 
     override fun describeContents() = 0
 

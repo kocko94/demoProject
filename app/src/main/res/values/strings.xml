@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">XapoDemo</string>
 
+    <string name="pojo_dummy_string_presentation_repo_model">Repository ID: %1$s\nRepository name: %2$s\nRepository language: %3$s\nRepository owner details:\n\t\t\t\t%4$s\nRepository full description: %5$s\nRepository watchers count: %6$d\nRepository forks count: %7$d\n\n\nI AM VERY SORRY FOR THIS UGLY PRESENTATION APPROACH BUT I AM VERY OVERLOADED WITH WORK THESE DAYS!</string>
+    <string name="pojo_dummy_string_presentation_owner_model">Username: %1$s</string>
     <string name="fragment_repos_list_download_error_msg">The files were not downloaded… Error: $1%s</string>
     <string name="fragment_repos_list_download_error_no_reason">No reason provided from the API server!</string>
     <string name="fragment_repos_list_download_start">Fetching data from the API…</string>

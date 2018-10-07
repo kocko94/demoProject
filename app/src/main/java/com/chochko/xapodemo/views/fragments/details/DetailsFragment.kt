@@ -57,7 +57,7 @@ class DetailsFragment : Fragment(), AppBarLayout.OnOffsetChangedListener{
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
             = inflater.inflate(R.layout.fragment_detail, container, false).apply {
-        ButterKnife.bind(this@DetailsFragment, this)
+        ButterKnife.bind(this@DetailsFragment, this) //just because you like butterknife although it usage with kotlin is quiite limited
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -90,6 +90,8 @@ class DetailsFragment : Fragment(), AppBarLayout.OnOffsetChangedListener{
                     .into(this.profile_image)
         }
 
+        //Dummy way of doing it but quite fast given my time limitations :)
+        this.repo_full_info.text = mRepoModel.toDetailFragmentString(this.context!!)
 
         toolbar.apply {
             setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
