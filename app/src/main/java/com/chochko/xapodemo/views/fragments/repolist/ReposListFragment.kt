@@ -51,6 +51,11 @@ class ReposListFragment : Fragment(),
             setHasFixedSize(true)
         }
 
+        //init the pull to refresh layout
+        this.pull_refresh.setOnRefreshListener {
+            this.mPresenter?.downloadGithubData()
+        }
+
         //continue only if the app is restoring after rotation
         savedInstanceState ?: return
         //immediately restore the state
@@ -72,7 +77,6 @@ class ReposListFragment : Fragment(),
         this.recycler_view.scrollToPosition(this.mScrollPosition)
 
     }
-
 
     private fun updateAdapterData(newData: ArrayList<RepositoryApiModel>){
         this.mAdapterItems = newData
@@ -128,12 +132,17 @@ class ReposListFragment : Fragment(),
     }
 
     override fun onDownloadFinish(downloadedRepos: GithubApiModel?, t: Throwable?) {
+        //dismiss the animation
+        this.pull_refresh?.isRefreshing = false
+
         if(downloadedRepos == null){//error while downloading
             val errorReason = t?.message ?: getString(R.string.fragment_repos_list_download_error_no_reason)
             Toast.makeText(this@ReposListFragment.context, getString(R.string.fragment_repos_list_download_error_msg, errorReason), Toast.LENGTH_LONG).show()
         }else{//the API call was successful
             //update the adapter
             this.updateAdapterData(ArrayList(downloadedRepos.items))
+            //notify the user
+            Toast.makeText(this@ReposListFragment.context, getString(R.string.fragment_repos_list_download_successful_finished), Toast.LENGTH_LONG).show()
         }
     }
 
