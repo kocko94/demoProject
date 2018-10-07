@@ -124,7 +124,7 @@ class ReposListFragment : Fragment(),
     }
 
     override fun onDownloadStart() {
-        //Start animation
+        Toast.makeText(this.context, getString(R.string.fragment_repos_list_download_start), Toast.LENGTH_LONG).show()
     }
 
     override fun onDownloadFinish(downloadedRepos: GithubApiModel?, t: Throwable?) {
