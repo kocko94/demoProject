@@ -1,5 +1,7 @@
 package com.chochko.xapodemo.views.adapters
 
+import android.os.Build
+import android.support.v4.view.ViewCompat
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -103,6 +105,12 @@ class ReposListAdapter(var reposData: ArrayList<RepositoryApiModel> = arrayListO
         private val repoShortDescription = view.repo_list_item_short_description
 
         override fun bindViews(repository: RepositoryApiModel) {
+
+            //It is important that each shared element in the source screen has a unique transition name
+            //otherwise the transitions won't work
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                ViewCompat.setTransitionName(repoOwnerAvatar, "${repository.owner.userName}${repository.name}")
+            }
 
             Glide.with(repoOwnerAvatar.context)
                     .load(repository.owner.userAvatarUrl)

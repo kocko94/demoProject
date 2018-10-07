@@ -1,21 +1,18 @@
 package com.chochko.xapodemo.views.fragments.repolist
 
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
-import android.support.transition.TransitionInflater
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import com.chochko.xapodemo.R
 import com.chochko.xapodemo.data.POJO.github.GithubApiModel
 import com.chochko.xapodemo.data.POJO.github.RepositoryApiModel
 import com.chochko.xapodemo.views.adapters.ReposListAdapter
-import com.github.benoitdion.ln.Ln
-import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.fragment_repos_list.*
 
 private const val KEY_SCROLL_POSITION = "scrollPosition"
@@ -145,7 +142,7 @@ class ReposListFragment : Fragment(),
          * @param sharedElement for APIs >= 21 this would be the shared element between fragments transition
          *
          */
-        fun onRepoListItemClicked(clickedRepo: RepositoryApiModel, sharedElement: CircleImageView)
+        fun onRepoListItemClicked(clickedRepo: RepositoryApiModel, sharedElement: ImageView)
     }
 
 }

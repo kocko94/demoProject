@@ -15,7 +15,6 @@
         >
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:transitionName="@string/fragment_shared_image_view_transition_name"
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,10 +24,12 @@
             >
 
             <ImageView
+                android:transitionName="@string/fragment_shared_image_view_transition_name"
+                android:id="@+id/profile_image"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/fragment_detail_collapse_image_height"
-                android:src="@drawable/github_octocat"
                 android:scaleType="centerCrop"
+                android:src="@drawable/github_octocat"
                 app:layout_collapseMode="parallax"
                 />
 
@@ -82,12 +83,11 @@
     </android.support.design.widget.AppBarLayout>
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:transitionName="@string/fragment_shared_image_view_transition_name"
-        android:id="@+id/profile_image"
         android:layout_width="@dimen/fragment_detail_circle_image_diameter"
         android:layout_height="@dimen/fragment_detail_circle_image_diameter"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/ic_launcher_foreground"
+        android:id="@+id/github_image"
+        android:src="@drawable/github_octocat"
         app:layout_anchor="@id/title_container"
         app:border_width="@dimen/fragment_detail_circle_image_border_width"
         app:border_color="@color/colorPrimaryDark"
