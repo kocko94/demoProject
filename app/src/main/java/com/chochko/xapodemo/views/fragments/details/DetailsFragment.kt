@@ -90,6 +90,10 @@ class DetailsFragment : Fragment(), AppBarLayout.OnOffsetChangedListener{
                     .into(this.profile_image)
         }
 
+        //assign the repo info to the holders
+        this.repo_name.text = mRepoModel.name
+        this.repo_description.text = mRepoModel.description
+
         //Dummy way of doing it but quite fast given my time limitations :)
         this.repo_full_info.text = mRepoModel.toDetailFragmentString(this.context!!)
 
